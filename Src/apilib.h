@@ -1,31 +1,31 @@
-/*
+/**
 @file apilib.h
 @brief 定義はアセンブラで記述されています
-*/
+**/
 
-/*
+/**
 @brief 一文字表示する
 @param c ASCII文字コード
-*/
+**/
 void api_putchar(int c);
 
-/*
+/**
 @brief 文字列表示する
 @param s 文字列の先頭ポインタ
-*/
+**/
 void api_putstr0(char *s);
 
-/*
+/**
 @brief
 @param s
 @param l
-*/
+**/
 void api_putstr1(char *s, int l);
 
-/*
+/**
 @brief 終了API
 @note APIが0以外を返す場合アプリを強制終了する
-*/
+**/
 void api_end(void);
 int api_openwin(char *buf, int xsiz, int ysiz, int col_inv, char *title);
 void api_putstrwin(int win, int x, int y, int col, int len, char *str);
