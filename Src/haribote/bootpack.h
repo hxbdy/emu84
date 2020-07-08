@@ -1,3 +1,8 @@
+/**
+* @file bootpack.h
+* @brief OS本体
+*/
+
 /* asmhead.nas */
 struct BOOTINFO { /* 0x0ff0-0x0fff */
 	char cyls; /* ブートセクタはどこまでディスクを読んだのか */
@@ -150,19 +155,58 @@ unsigned int memman_alloc_4k(struct MEMMAN *man, unsigned int size);
 int memman_free_4k(struct MEMMAN *man, unsigned int addr, unsigned int size);
 
 /* sheet.c */
+
+/**
+ * @def MAX_SHEETS
+ * @brief シートの最大数
+ */
 #define MAX_SHEETS		256
+
+/**
+ * @struct SHEET
+ * @brief シート構造体
+ */
 struct SHEET {
+	//! ウインドウの描画内容を記憶する番地
 	unsigned char *buf;
-	int bxsize, bysize, vx0, vy0, col_inv, height, flags;
+	//! ウインドウ全体の大きさは bxsize * bysize
+	int bxsize, bysize;
+	//! ウインドウのグローバル座標
+	int vx0, vy0;
+	//! 透明色番号
+	int col_inv;
+	//! ウインドウの高さ
+	int height;
+	//! 各種フラグ
+	int flags;
 	struct SHTCTL *ctl;
 	struct TASK *task;
 };
+
+/**
+ * @struct SHTCTL
+ * @brief シートコントロール構造体
+ */
 struct SHTCTL {
 	unsigned char *vram, *map;
-	int xsize, ysize, top;
+	int xsize, ysize;
+	//! 一番上のウインドウ
+	int top;
+	//! sheets0に記憶されているウインドウを低い順から並び変えて番地のみを記憶
 	struct SHEET *sheets[MAX_SHEETS];
+	//! ウインドウ情報MAX_SHEETS枚
 	struct SHEET sheets0[MAX_SHEETS];
 };
+
+/**
+ * @brief 
+ * シートコントロールの初期化を行います
+ * @param memman メモリマネージャのポインタ
+ * @param vram vramのポインタ
+ * @param xsize x方向の大きさ
+ * @param ysize y方向の大きさ
+ * @return SHTCTL* シートコントロールポインタ
+ */
 struct SHTCTL *shtctl_init(struct MEMMAN *memman, unsigned char *vram, int xsize, int ysize);
 struct SHEET *sheet_alloc(struct SHTCTL *ctl);
 void sheet_setbuf(struct SHEET *sht, unsigned char *buf, int xsize, int ysize, int col_inv);
