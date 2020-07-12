@@ -205,14 +205,64 @@ struct SHTCTL {
  * @param vram vramのポインタ
  * @param xsize x方向の大きさ
  * @param ysize y方向の大きさ
- * @return SHTCTL* シートコントロールポインタ
+ * @return struct SHTCTL* シートコントロールポインタ
  */
 struct SHTCTL *shtctl_init(struct MEMMAN *memman, unsigned char *vram, int xsize, int ysize);
+
+/**
+ * @brief 
+ * sheets0[]の中から未使用ウインドウを探します
+ * 見つかったら使用中マークをつけてその番地を返します
+ * 高さ-1は未設定なので非表示にします
+ * @param ctl 
+ * @return struct SHEET* 
+ */
 struct SHEET *sheet_alloc(struct SHTCTL *ctl);
+
+/**
+ * @brief 
+ * ウインドウのバッファや大きさ、透明色を設定します
+ * @param sht 
+ * @param buf 
+ * @param xsize 
+ * @param ysize 
+ * @param col_inv 透明色
+ */
 void sheet_setbuf(struct SHEET *sht, unsigned char *buf, int xsize, int ysize, int col_inv);
+
+/**
+ * @brief 
+ * 指定された高さにウインドウを設定します
+ * @param sht ウインドウのポインタ
+ * @param height ウインドウの高さ
+ */
 void sheet_updown(struct SHEET *sht, int height);
+
+/**
+ * @brief 
+ * 変化したウインドウから上のウインドウを再描画します
+ * @param sht ウインドウのアドレス
+ * @param bx0 ローカルx座標始点
+ * @param by0 ローカルy座標始点
+ * @param bx1 ローカルx座標終点
+ * @param by1 ローカルy座標終点
+ */
 void sheet_refresh(struct SHEET *sht, int bx0, int by0, int bx1, int by1);
+
+/**
+ * @brief 
+ * ウインドウの高さを変えずに上下左右に移動します
+ * @param sht 
+ * @param vx0 
+ * @param vy0 
+ */
 void sheet_slide(struct SHEET *sht, int vx0, int vy0);
+
+/**
+ * @brief 
+ * 使い終わったウインドウを開放します
+ * @param sht 
+ */
 void sheet_free(struct SHEET *sht);
 
 /* timer.c */
