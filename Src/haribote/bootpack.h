@@ -163,6 +163,16 @@ int memman_free_4k(struct MEMMAN *man, unsigned int addr, unsigned int size);
 #define MAX_SHEETS		256
 
 /**
+ * @enum WINDOWTYPE
+ * @brief 
+ * ウインドウタイプ
+ */
+enum WINDOWTYPE{
+	WINDOW_NORMAL,
+	WINDOW_BORDERLESS
+};
+
+/**
  * @struct SHEET
  * @brief シート構造体
  */
@@ -179,6 +189,9 @@ struct SHEET {
 	int height;
 	//! 各種フラグ
 	int flags;
+	//! ウインドウタイプ
+	enum WINDOWTYPE windowtype;
+	
 	struct SHTCTL *ctl;
 	struct TASK *task;
 };
@@ -335,6 +348,7 @@ void task_sleep(struct TASK *task);
 
 /* window.c */
 void make_window8(unsigned char *buf, int xsize, int ysize, char *title, char act);
+void make_borderlessWindow8(unsigned char *buf, int xsize, int ysize, char *title, char act);
 void putfonts8_asc_sht(struct SHEET *sht, int x, int y, int c, int b, char *s, int l);
 void make_textbox8(struct SHEET *sht, int x0, int y0, int sx, int sy, int c);
 void make_wtitle8(unsigned char *buf, int xsize, char *title, char act);

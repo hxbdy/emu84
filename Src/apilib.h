@@ -251,3 +251,15 @@ int api_cmdline(char *buf, int maxsize);
  * 2:Japanese EUC
  */
 int api_getlang(void);
+
+/**
+ * @brief 
+ * ボーダウインドウを生成する
+ * @param buf ウインドウのバッファ
+ * @param xsiz x方向の大きさ
+ * @param ysiz y方向の大きさ
+ * @param col_inv 透明にする色
+ * @param title ウインドウタイトル
+ * @return int ウインドウID
+ */
+int api_openBorderlessWin(char *buf, int xsize, int ysize, int col_inv, char *title);

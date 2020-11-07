@@ -6,10 +6,9 @@ void HariMain(void)
 	int win;
 	api_initmalloc();
 	buf = api_malloc(150 * 100);
-	win = api_openwin(buf, 150, 100, -1, "test");
-	api_boxfilwin(win,  6, 26, 143, 93, 0);
+	win = api_openBorderlessWin(buf, 150, 100, -1, "test");
 	api_point(win, 75, 59, 3);
-	api_putstr1("SAMPLE STRING", 2);
+	api_putstr1("SAMPLE STRING", 13);
 	for (;;) {
 		if (api_getkey(1) == 0x0a) {
 			break;

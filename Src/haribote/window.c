@@ -17,6 +17,11 @@ void make_window8(unsigned char *buf, int xsize, int ysize, char *title, char ac
 	return;
 }
 
+void make_borderlessWindow8(unsigned char *buf, int xsize, int ysize, char *title, char act){
+	boxfill8(buf, xsize, COL8_C6C6C6, 0, 0, xsize - 1, ysize - 1);
+	return;
+}
+
 void make_wtitle8(unsigned char *buf, int xsize, char *title, char act)
 {
 	static char closebtn[14][16] = {
@@ -97,7 +102,9 @@ void change_wtitle8(struct SHEET *sht, char act)
 {
 	int x, y, xsize = sht->bxsize;
 	char c, tc_new, tbc_new, tc_old, tbc_old, *buf = sht->buf;
-	if (act != 0) {
+
+	/* アクティブウインドウであることを示すタイトル領域の変色 */
+	if (act != 0 && sht->windowtype == WINDOW_NORMAL) {
 		tc_new  = COL8_FFFFFF;
 		tbc_new = COL8_000084;
 		tc_old  = COL8_C6C6C6;

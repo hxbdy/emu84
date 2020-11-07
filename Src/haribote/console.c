@@ -444,9 +444,11 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 	} else if (edx == 4) {
 		return &(task->tss.esp0);
 	} else if (edx == 5) {
+		/* ウインドウの作成 */
 		sht = sheet_alloc(shtctl);
 		sht->task = task;
 		sht->flags |= 0x10;
+		sht->windowtype = WINDOW_NORMAL;
 		sheet_setbuf(sht, (char *) ebx + ds_base, esi, edi, eax);
 		make_window8((char *) ebx + ds_base, esi, edi, (char *) ecx + ds_base, 0);
 		sheet_slide(sht, ((shtctl->xsize - esi) / 2) & ~3, (shtctl->ysize - edi) / 2);
@@ -630,7 +632,19 @@ int *hrb_api(int edi, int esi, int ebp, int esp, int ebx, int edx, int ecx, int 
 		reg[7] = i;
 	} else if (edx == 27) {
 		reg[7] = task->langmode;
+	} else if (edx == 28){
+		/* ボーダレスウインドウの作成 */
+		sht = sheet_alloc(shtctl);
+		sht->task = task;
+		sht->flags |= 0x10;
+		sht->windowtype = WINDOW_BORDERLESS;
+		sheet_setbuf(sht, (char *) ebx + ds_base, esi, edi, eax);
+		make_borderlessWindow8((char *) ebx + ds_base, esi, edi, (char *) ecx + ds_base, 0);
+		sheet_slide(sht, ((shtctl->xsize - esi) / 2) & ~3, (shtctl->ysize - edi) / 2);
+		sheet_updown(sht, shtctl->top); /* 今のマウスと同じ高さになるように指定： マウスはこの上になる */
+		reg[7] = (int) sht;
 	}
+
 	return 0;
 }
 

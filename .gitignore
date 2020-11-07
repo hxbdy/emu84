@@ -1,4 +1,10 @@
-.vscode
+*.obj
+*.bim
+*.lst
+*.map
+*.hrb
+*.bin
 *.img
+*.nas
 *.iso
 z_tools\
