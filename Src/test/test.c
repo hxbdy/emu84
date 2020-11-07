@@ -8,7 +8,7 @@ void HariMain(void)
 	buf = api_malloc(150 * 100);
 	win = api_openBorderlessWin(buf, 150, 100, -1, "test");
 	api_point(win, 75, 59, 3);
-	api_putstr1("SAMPLE STRING", 13);
+	api_putstr1("BORDERLESS WINDOW", 17);
 	for (;;) {
 		if (api_getkey(1) == 0x0a) {
 			break;
