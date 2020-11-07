@@ -254,7 +254,7 @@ int api_getlang(void);
 
 /**
  * @brief 
- * ボーダウインドウを生成する
+ * ボーダレスウインドウを生成する
  * @param buf ウインドウのバッファ
  * @param xsiz x方向の大きさ
  * @param ysiz y方向の大きさ
